@@ -1,31 +1,39 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col mt-5">
-            <div class="text-center">
-                <h2>Vaííčko MVC FW</h2>
-                <img src="public/images/vaiicko_logo.png">
-                <p>
-                    Gratulujeme vám, úspešne sa vám podarilo nainštalovať a spustiť framework
-                    <strong>Vaííčko</strong> <?= \App\Config\Configuration::FW_VERSION ?>!<br>
-                    Dúfame, že sa Vám pomocou tohto frameworku vytvoríte nejakú skvelú aplikáciu.<br>
-                </p>
-                <p>
-                    Tento jednoduchý framework bol vytvorený pre lepšie pochopenie architektúry MVC.<br>
-                    Je určený pre študentov predmetu <em>vývoj aplikácií pre internet a intranet</em>, ale nielen im.
-                </p>
+<?php
+
+/** @var Array $data */
+/** @var \App\Models\Game $game */
+/** @var \App\Core\IAuthenticator $auth */
+
+/** @var \App\Core\LinkGenerator $link */
+?>
+
+<div class="container">
+    <form method="get" action="<?= $link->url("home.search") ?>" class="mb-3 offset-md-3">
+        <div class="input-group" style="max-width: 632px">
+            <input type="text" class="form-control" name="search" placeholder="Search by title...">
+            <button type="submit" class="btn btn-primary">Find</button>
+        </div>
+    </form>
+
+    <?php foreach ($data['games'] as $game): ?>
+    <div class="card mb-3 offset-md-3" style="max-height: 69px; max-width: 632px">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="<?= $game->getPicture() ?>" class="img-fluid rounded-start" style="max-height: 67px">
+            </div>
+            <div class="col-md-6">
+                <div class="card-text">
+                    <a href="<?= $link->url("home.game_info", ['id' => $game->getId()]) ?>" class="stretched-link" style="color: black; text-decoration: none">
+                        <h6><?= $game->getTitle() ?></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <p class="card-body"><?= $game->getPrice() ?> &euro;</p>
             </div>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col text-center">
-            <h4>Autori</h4>
-            <div>
-                <a href="mailto:Patrik.Hrkut@fri.uniza.sk">doc. Ing. Patrik Hrkút, PhD.</a><br>
-                <a href="mailto:Michal.Duracik@fri.uniza.sk">Ing. Michal Ďuračík, PhD.</a><br>
-                <a href="mailto:Matej.Mesko@fri.uniza.sk">Ing. Matej Meško, PhD.</a><br><br>
-                &copy; 2020-<?= date('Y') ?> Žilinská univerzita v Žiline, Fakulta riadenia a informatiky, Katedra
-                softvérových technológií
-            </div>
-        </div>
-    </div>
+    <?php endforeach; ?>
+
+
 </div>

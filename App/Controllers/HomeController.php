@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
+use App\Models\Game;
 
 /**
  * Class HomeController
@@ -28,7 +29,13 @@ class HomeController extends AControllerBase
      */
     public function index(): Response
     {
-        return $this->html();
+        $param = "%" . $this->request()->getValue('search') . "%";
+        $games = Game::getAll('`title` LIKE ?', [$param]);
+        return $this->html(
+            [
+                'games' => $games
+            ]
+        );
     }
 
     /**
@@ -38,5 +45,15 @@ class HomeController extends AControllerBase
     public function contact(): Response
     {
         return $this->html();
+    }
+
+    public function game_info(): Response
+    {
+        $id = (int) $this->request()->getValue('id');
+        return $this->html(
+            [
+                'game' => Game::getOne($id)
+            ]
+        );
     }
 }
