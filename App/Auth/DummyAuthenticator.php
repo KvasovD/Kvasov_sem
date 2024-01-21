@@ -87,4 +87,9 @@ class DummyAuthenticator implements IAuthenticator
     {
         return $_SESSION['user'];
     }
+
+    public function getLoggedUserRole(): mixed
+    {
+        return null;
+    }
 }

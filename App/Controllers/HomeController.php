@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Game;
+use App\Models\Review;
 
 /**
  * Class HomeController
@@ -49,10 +50,11 @@ class HomeController extends AControllerBase
 
     public function game_info(): Response
     {
-        $id = (int) $this->request()->getValue('id');
+        $game_id = (int) $this->request()->getValue('game_id');
         return $this->html(
             [
-                'game' => Game::getOne($id)
+                'game' => Game::getOne($game_id),
+                'reviews' => Review::getAll('`game_id` LIKE ?', [$game_id])
             ]
         );
     }

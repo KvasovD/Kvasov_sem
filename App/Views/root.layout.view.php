@@ -24,27 +24,39 @@
             <img src="public/images/shop_logo.png" title="<?= \App\Config\Configuration::APP_NAME ?>"
                  title="<?= \App\Config\Configuration::APP_NAME ?>">
         </a>
-        <?php if ($auth->isLogged() && $auth->getLoggedUserName() == "admin") { ?>
+
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
-                <a class="nav-link" href="<?= $link->url("game.add") ?>">New game</a>
+                <a class="nav-link" href="<?= $link->url("tiding.news") ?>">News</a>
             </li>
+            <?php if ($auth->isLogged() && $auth->getLoggedUserRole() == 1) { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= $link->url("game.add") ?>">New game</a>
+                </li>
+            <?php } ?>
         </ul>
-        <?php } ?>
+        <ul class="navbar-nav" style="list-style: none; padding: 0; margin: 0; display: inline-block; text-align: left;">
         <?php if ($auth->isLogged()) { ?>
-            <span class="navbar-text">User online: <b><?= $auth->getLoggedUserName() ?></b></span>
-            <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <span class="navbar-text">User online: <b><?= $auth->getLoggedUserName() ?></b></span>
+            </li>
+        <?php } ?>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+            <?php if ($auth->isLogged()) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $link->url("auth.logout") ?>">Logout</a>
                 </li>
-            </ul>
-        <?php } else { ?>
-            <ul class="navbar-nav ms-auto">
+            <?php } else { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= $link->url("user.signup") ?>">Sign up</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= \App\Config\Configuration::LOGIN_URL ?>">Login</a>
                 </li>
-            </ul>
-        <?php } ?>
+            <?php } ?>
+        </ul>
+
     </div>
 </nav>
 <div class="container-fluid mt-3">
